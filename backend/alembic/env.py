@@ -1,18 +1,25 @@
 import sys
 import os
 
+from logging.config import fileConfig
+from sqlalchemy import create_engine, pool
+from alembic import context
+from app.db.base import Base  # Import models after modifying sys.path
+from app.core.config import DATABASE_URL
+
 # Ensure the app directory is in the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logging.config import fileConfig
-from sqlalchemy import create_engine
-from sqlalchemy import pool
-from alembic import context
-from app.db.base import Base  # Import models AFTER modifying sys.path
-from app.core.config import DATABASE_URL
-
 # Alembic Config object, which provides access to alembic.ini settings
 config = context.config
+
+# Ensure DATABASE_URL is correctly set
+if not DATABASE_URL:
+    raise ValueError(
+        "DATABASE_URL is not set. Ensure the environment variables are loaded correctly."
+    )
+
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # Load logging configuration from alembic.ini if available
 if config.config_file_name is not None:
