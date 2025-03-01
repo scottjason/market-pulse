@@ -1,26 +1,19 @@
-import subprocess
-import logging
-
 from fastapi import FastAPI
-from app.api.v1.api import api_router
+from contextlib import asynccontextmanager
+import subprocess
 
-app = FastAPI()
 
-
-# Run Alembic migrations automatically on startup
+# Run Alembic migrations on startup
 def run_migrations():
-    try:
-        logging.info("Running Alembic migrations...")
-        subprocess.run(["alembic", "upgrade", "head"], check=True)
-        logging.info("Migrations completed successfully.")
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Error running migrations: {e}")
+    print("Running Alembic migrations...")
+    subprocess.run(["alembic", "upgrade", "head"], check=True)
 
 
-@app.on_event("startup")
-async def startup_event():
-    run_migrations()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    run_migrations()  # Run migrations before startup
+    yield  # This ensures the app continues running
 
 
-# Include API routes
-app.include_router(api_router)
+# Create FastAPI app with lifespan
+app = FastAPI(lifespan=lifespan)
