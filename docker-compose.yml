@@ -20,7 +20,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: marketpulse_backend
     restart: always
     depends_on:
@@ -47,7 +47,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: marketpulse_frontend
     restart: always
     depends_on:
@@ -58,7 +58,7 @@ services:
       - NEXT_DISABLE_SWC=1
       - NEXT_PUBLIC_API_URL=http://marketpulse_backend:8000 # API calls must use this
     volumes:
-      - ./frontend:/app:cached # Cached volume for performance
+      - ./frontend:/app
     working_dir: /app
     command: ["pnpm", "dev"]
 
