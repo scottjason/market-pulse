@@ -1,14 +1,15 @@
 import sys
 import os
 
+# Ensure the app directory is in the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from logging.config import fileConfig
 from sqlalchemy import create_engine, pool
 from alembic import context
 from app.db.base import Base  # Import models after modifying sys.path
 from app.core.config import DATABASE_URL
 
-# Ensure the app directory is in the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Alembic Config object, which provides access to alembic.ini settings
 config = context.config
