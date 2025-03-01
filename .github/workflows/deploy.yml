@@ -1,4 +1,4 @@
-name: Deploy Backend
+name: Deploy Docker Images
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push-backend:
+  build-and-push:
     runs-on: ubuntu-latest
 
     permissions:
@@ -14,27 +14,19 @@ jobs:
       packages: write
 
     steps:
-      - name: 🚀 Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 🏷️ Extract Git Commit SHA
-        run: echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
-      - name: 🔑 Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: 🔨 Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: 🏗️ Build and Push Backend Image
+      - name: Build and Push Backend Image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./backend/Dockerfile
           push: true
-          tags: |
-            ghcr.io/${{ github.repository }}/backend:latest
-            ghcr.io/${{ github.repository }}/backend:${{ env.GIT_SHA }}
-
-      - name: ✅ Verify Image in GHCR
-        run: docker pull ghcr.io/${{ github.repository }}/backend:${{ env.GIT_SHA }}
+          tags: ghcr.io/${{ github.repository }}/backend:latest
