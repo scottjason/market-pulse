@@ -1,9 +1,35 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
-.env
-*.sqlite3
-instance/
-venv/
-db.sqlite3
 *.pyc
 *.pyo
 *.pyd
+
+# Virtual environment
+venv/
+
+# Alembic migrations cache
+alembic/versions/__pycache__/
+
+# Local database files
+instance/
+db.sqlite3
+*.sqlite3
+
+# Ignore environment variables
+.env
+
+# Logs and temp files
+*.log
+*.out
+*.pid
+*.swp
+*.swo
+*.bak
+
+# Ignore compiled dependencies
+.mypy_cache/
+.pytest_cache/
+
+# Ignore Docker cache and build files
+*.dockerignore
+.docker/

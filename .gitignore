@@ -1,1 +1,39 @@
-README.md
+# macOS
+.DS_Store
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Ignore system files
+*.swp
+*.swo
+*.bak
+Thumbs.db
+
+# Ignore environment variables
+.env
+.env.local
+.env.production
+.env.test
+.env.development
+
+# Ignore build artifacts
+/build/
+/dist/
+out/
+.next/
+
+# Ignore Docker-related files (Docker Compose only for dev)
+docker-compose.override.yml
+
+# Ignore dependencies
+node_modules/
+.pnpm/
+
+# Ignore IDE settings
+.vscode/
+.idea/
+*.iml
