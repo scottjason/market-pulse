@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import subprocess
+from app.api.v1.endpoints import users
 
 
-# Run Alembic migrations on startup
 def run_migrations():
     print("Running Alembic migrations...")
     subprocess.run(["alembic", "upgrade", "head"], check=True)
@@ -11,9 +11,10 @@ def run_migrations():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    run_migrations()  # Run migrations before startup
-    yield  # This ensures the app continues running
+    run_migrations()
+    yield
 
 
-# Create FastAPI app with lifespan
 app = FastAPI(lifespan=lifespan)
+
+app.include_router(users.router, prefix="/users", tags=["users"])
