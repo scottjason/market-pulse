@@ -9,6 +9,8 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 COPY ./backend/ ./
 
+RUN pip install alembic
+
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
