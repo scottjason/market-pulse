@@ -9,7 +9,6 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 COPY ./backend/ ./
 
-ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
