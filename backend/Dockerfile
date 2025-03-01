@@ -9,7 +9,7 @@ RUN ls -la /app
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
-COPY ./backend /app/
+COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
